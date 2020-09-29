@@ -1,20 +1,12 @@
-window.onload = () => {
-  setTimeout(() => {
-    document.querySelector('body').classList.add('display');
-  }, 4000);
-};
-
-const hamburger = document.querySelector('.hamburger-menu');
-
-hamburger.addEventListener('click', () => {
-  document.querySelector('.container').classList.toggle('change');
+$('.menu').on('click', function () {
+  $(this).toggleClass('active');
+  $('.overlay').toggleClass('menu-open');
 });
 
-window.onload = () => {
-  setTimeout(() => {
-    document.querySelector('body').classList.add('display');
-  }, 4000);
-};
+$('.nav a').on('click', function () {
+  $('.menu').removeClass('active');
+  $('.overlay').removeClass('menu-open');
+});
 
 document.querySelector('.scroll-btn').addEventListener('click', () => {
   document.querySelector('html').style.scrollBehavior = 'smooth';

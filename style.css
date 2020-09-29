@@ -13,193 +13,143 @@ html {
   font-size: 62.5%;
 }
 
-.container {
-  display: none;
+a {
+  text-decoration: none;
+  color: var(--main-white);
 }
 
-.display .container {
-  display: block;
+body {
+  font-family: var(--main-font-family);
 }
 
-/* Spinner */
-.spinner-container {
-  position: absolute;
+/* CSS VARIABLES / CUSTOM PROPERTIES */
+:root {
+  --main-font-color: #c29525;
+  --main-white: #fff;
+  --main-font-dark-gray: #0f0f0f;
+  --main-footer-bg-color: #141414;
+  --main-font-family: 'Baloo Da 2', serif;
+}
+
+/* Navigation */
+.nav {
+  width: 100%;
+  height: 6rem;
+  line-height: 6rem;
+  position: fixed;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.95);
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #262626;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 1s;
-  z-index: 300;
-}
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  transition: opacity 0.75s;
+  transform: scale(0);
 
-.display .spinner-container {
+  /* overlay menu is invisible */
   opacity: 0;
-  visibility: hidden;
 }
 
-.circles {
-  width: 8rem;
-  height: 8rem;
+.overlay.menu-open {
+  transform: scale(1);
+
+  /* This will show the overlay menu */
+  opacity: 1;
+}
+
+.nav-link {
+  opacity: 0.8;
+}
+
+.brand img {
+  opacity: 0.8;
+}
+
+.nav .overlay ul {
   position: relative;
-  opacity: 0;
-  visibility: hidden;
-  animation: displayCircles 4s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.circles div {
-  animation: circles 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  transform-origin: 4rem 4rem;
+.nav .overlay ul li {
+  text-transform: uppercase;
 }
 
-.circles div::after {
-  content: '';
-  position: absolute;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  background-color: #c29525;
-  margin: -0.4rem 0 0 -0.4rem;
+.nav .overlay ul li a {
+  display: block;
+  font-size: 2rem;
+  transition: color 0.5s;
 }
 
-.circles div:nth-child(1) {
-  animation-delay: -0.036s;
-}
-.circles div:nth-child(2) {
-  animation-delay: -0.072s;
-}
-.circles div:nth-child(3) {
-  animation-delay: -0.108s;
-}
-.circles div:nth-child(4) {
-  animation-delay: -0.144s;
-}
-.circles div:nth-child(5) {
-  animation-delay: -0.18s;
-}
-.circles div:nth-child(6) {
-  animation-delay: -0.216s;
-}
-.circles div:nth-child(7) {
-  animation-delay: -0.252s;
-}
-.circles div:nth-child(8) {
-  animation-delay: -0.288s;
-}
-
-.circles div:nth-child(1)::after {
-  top: 6.3rem;
-  left: 6.3rem;
-}
-.circles div:nth-child(2)::after {
-  top: 6.8rem;
-  left: 5.6rem;
-}
-.circles div:nth-child(3)::after {
-  top: 7.1rem;
-  left: 4.8rem;
-}
-.circles div:nth-child(4)::after {
-  top: 7.2rem;
-  left: 4rem;
-}
-.circles div:nth-child(5)::after {
-  top: 7.1rem;
-  left: 3.2rem;
-}
-.circles div:nth-child(6)::after {
-  top: 6.8rem;
-  left: 2.4rem;
-}
-.circles div:nth-child(7)::after {
-  top: 6.3rem;
-  left: 1.7rem;
-}
-.circles div:nth-child(8)::after {
-  top: 5.6rem;
-  left: 1.2rem;
+.nav .overlay ul li a:hover {
+  color: #888;
 }
 
 /* Hamburger Menu */
-.hamburger-menu {
-  width: 3rem;
-  height: 3rem;
+.menu {
+  padding: 2rem 2.5rem;
+
+  /* Hamburger menu will stay fixed on screen */
   position: fixed;
-  top: 5rem;
-  right: 5rem;
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  top: 3rem;
+  right: 3rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  border-radius: 3px;
   cursor: pointer;
-  transition: right 0.5s;
 }
 
-.hamburger-menu span {
-  position: absolute;
-  left: 5rem;
-  width: 10rem;
-  height: 4rem;
-  background-color: #e2b646;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-family: 'Baloo Da 2', serif;
-  font-size: 1.6rem;
-  letter-spacing: 0.1rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s;
-}
-
-.change .hamburger-menu:hover span {
-  opacity: 1;
-  visibility: visible;
-}
-
-.hamburger-menu span::before {
+.menu .bar,
+.menu .bar::before,
+.menu .bar::after {
   content: '';
   position: absolute;
-  border-left: 1rem solid transparent;
-  border-right: 1rem solid #e2b646;
-  border-bottom: 1rem solid transparent;
-  border-top: 1rem solid transparent;
-  top: 50%;
-  left: -2rem;
-  transform: translateY(-50%);
+  height: 2px;
+  width: 3rem;
+  background-color: var(--main-white);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transition: 0.25s;
 }
 
-.change .hamburger-menu {
-  right: 33rem;
+.menu .bar::before {
+  top: -2rem;
 }
 
-.line {
-  width: 100%;
-  height: 0.2rem;
-  background-color: #fff;
-  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
+.menu .bar::after {
+  top: 2rem;
 }
 
-.line {
-  background-color: rgba(0, 0, 0, 0.8);
+.active .bar {
+  background-color: transparent;
 }
 
-.change .line-1 {
-  transform: rotate(45deg) translate(0.3rem, 0.8rem);
+.active .bar::before {
+  transform: rotate(45deg);
 }
 
-.change .line-2 {
-  opacity: 0;
-  visibility: hidden;
+.active .bar::after {
+  transform: rotate(-45deg);
 }
 
-.change .line-3 {
-  transform: rotate(-45deg) translate(0.3rem, -0.8rem);
+.active .bar::before,
+.active .bar::after {
+  top: 0;
 }
+
 /* Header Section */
 .header {
   width: 100%;
@@ -221,7 +171,7 @@ html {
   height: 100%;
   object-fit: cover;
   opacity: 0.5;
-  animation: scale 15s;
+  animation: scale 10s;
 }
 
 .banner {
@@ -231,7 +181,7 @@ html {
 }
 
 .banner h1 {
-  font-family: 'Baloo Da 2', serif;
+  font-family: var(--main-font-family);
   font-size: 8rem;
   font-weight: 300;
   color: #fff;
@@ -244,7 +194,7 @@ html {
 }
 
 .banner p {
-  font-family: 'Josefin Slab', serif;
+  font-family: var(--main-font-family);
   font-size: 4rem;
   color: #fff;
   width: 70%;
@@ -269,82 +219,6 @@ html {
   cursor: pointer;
   opacity: 0;
   animation: moveBanner 1s 0.9s forwards;
-}
-
-/* Sidebar Section */
-.sidebar {
-  width: 40rem;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  right: -40rem;
-  background-color: white;
-  transition: right 0.3s;
-  z-index: 100;
-}
-
-.change .sidebar {
-  right: 0;
-}
-
-.menu {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.menu-item {
-  text-align: center;
-}
-
-.menu-link {
-  font-family: 'Baloo Da 2', serif;
-  font-size: 4rem;
-  color: #555;
-  position: relative;
-}
-
-.menu-link::before {
-  content: attr(data-content);
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: #c29525;
-  width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  transition: width 0.3s ease-in-out;
-}
-
-.menu-link:hover::before {
-  width: 100%;
-}
-
-.social-media {
-  position: absolute;
-  bottom: 3rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.social-media i {
-  font-size: 2.2rem;
-  margin: 3rem;
-  width: 4.5rem;
-  height: 4.5rem;
-  background-color: #777;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.social-media i:hover {
-  background-color: #c29525;
 }
 
 /* About Us section */
@@ -774,6 +648,68 @@ html {
 }
 
 /* Media Queries */
+
+@media (min-width: 1000px) {
+  /* Hide the menu toggle */
+  .menu {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    padding: 2rem 10rem 0;
+    justify-content: space-between;
+  }
+
+  .nav .brand {
+    margin: 0;
+  }
+
+  .nav .overlay {
+    position: initial;
+    background: none;
+    opacity: initial;
+    transform: initial;
+  }
+
+  .nav .overlay ul {
+    flex-direction: row;
+    list-style: none;
+    margin-top: 2px;
+  }
+
+  .nav .overlay ul li a {
+    display: block;
+    font-size: 1.75rem;
+    transition: all 0.5s;
+    letter-spacing: 1px;
+    margin-right: -1px;
+    padding: 0;
+  }
+
+  .nav .overlay ul li {
+    position: relative;
+    padding: 0;
+    margin: 0 20px;
+  }
+
+  .nav .overlay ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    background-color: var(--main-font-color);
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 800ms;
+  }
+
+  .nav .overlay ul li:hover::before {
+    transform: scaleX(1);
+  }
+}
 @media (max-width: 1500px) {
   .about-us-img-wrapper {
     grid-row: 3 / -1;
